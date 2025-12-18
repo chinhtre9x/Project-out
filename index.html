@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hệ Thống Cảnh Báo Lũ</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+        }
+        .header {
+            background-color: #1C86EE;
+            color: yellow;
+            font-weight: bold;
+            font-size: 40px;
+            padding: 20px;
+            margin: 20px auto;
+        }
+        .station {
+            margin: 20px auto;
+            width: 80%;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .station-title {
+            background-color: gold;
+            font-size: 20px;
+            font-weight: bold;
+            padding: 10px;
+        }
+        .station-content {
+            background-color: pink;
+            padding: 15px;
+        }
+        .station-content p {
+            margin: 8px 0;
+            font-size: 18px;
+        }
+    </style>
+    <script>
+        async function fetchData() {
+            try {
+                const response = await fetch('data.txt');
+                const text = await response.text();
+                const data = text.split(',');
+                
+                document.getElementById("humidity1").innerText = data[0] + "%";
+                document.getElementById("water1").innerText = data[1] + " cm";
+                document.getElementById("flow1").innerText = data[2] + " m3";
+                document.getElementById("humidity2").innerText = data[3] + "%";
+                document.getElementById("water2").innerText = data[4] + " cm";
+                document.getElementById("flow2").innerText = data[5] + " m3";
+            } catch (error) {
+                console.error("Lỗi khi tải dữ liệu:", error);
+            }
+        }
+        setInterval(fetchData, 2000);
+    </script>
+</head>
+<body onload="fetchData()">
+    <div class="header">HỆ THỐNG CẢNH BÁO LŨ</div>
+    
+    <div class="station">
+        <div class="station-title">Trạm số 1</div>
+        <div class="station-content">
+            <p><strong>Độ ẩm đất:</strong> <span id="humidity1">...</span></p>
+            <p><strong>Mực nước:</strong> <span id="water1">...</span></p>
+            <p><strong>Tốc độ dòng chảy:</strong> <span id="flow1">...</span></p>
+        </div>
+    </div>
+    
+    <div class="station">
+        <div class="station-title">Trạm số 2</div>
+        <div class="station-content">
+            <p><strong>Độ ẩm đất:</strong> <span id="humidity2">...</span></p>
+            <p><strong>Mực nước:</strong> <span id="water2">...</span></p>
+            <p><strong>Tốc độ dòng chảy:</strong> <span id="flow2">...</span></p>
+        </div>
+    </div>
+</body>
+</html>
